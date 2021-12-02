@@ -8,10 +8,11 @@ const url = (anchor) => process.env.REACT_APP_URL + anchor;
 console.log(url("users.json"));
 
 function App() {
-  const [loading, setLoading] = useState({ users: false, info: false });
+  const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState([]);
   const [info, setInfo] = useState();
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     setLoading({ users: true, info: false });
@@ -20,7 +21,8 @@ function App() {
       .then((result) => {
         setLoading({ users: false, info: false });
         setUsers(result);
-      });
+      })
+      .catch(error => setError(error.message))
   }, []);
 
   useEffect(() => {
@@ -31,7 +33,8 @@ function App() {
         .then((result) => {
           setLoading({ users: false, info: false });
           setInfo(result);
-        });
+        })
+        .catch(error => setError(error.message))
     }
   }, [selectedUser]);
 
