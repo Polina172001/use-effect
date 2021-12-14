@@ -15,17 +15,6 @@ function App() {
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    setLoading({ users: true, info: false });
-    fetch(url("users.json"))
-      .then((response) => response.json())
-      .then((result) => {
-        setLoading({ users: false, info: false });
-        setUsers(result);
-      })
-      .catch(error => setError(error.message))
-  }, []);
-
-  useEffect(() => {
     if (selectedUser) {
       setLoading({ users: false, info: true });
       fetch(url(`${selectedUser}.json`))
@@ -55,7 +44,7 @@ function App() {
         <Loader />
       ) : (
         <div className="info-wrapper">
-          <Details info={info} />
+          <Details />
         </div>
       )}
     </div>
